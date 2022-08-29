@@ -63,16 +63,15 @@ $shares = Get-AzStorageShare -Context $sourceContext | Where-Object { $_.Name -e
 $sourceShareSASURI = New-AzStorageAccountSASToken -Context $sourceContext `
     -Service File -ResourceType Service, Container, Object -ExpiryTime(get-date).AddDays(1) -Permission "rdl"
 # Iterate through all Azure Files shares in the $shares variable with array data type
-foreach ($share in $shares) {
-    $shareName = $($share.Name)
+$shareName = $($shares.Name)
     
-    # Get all the files and directories in a file share and save as an array in a variable 
-    $filesAndDirs = Get-AzStorageFile -ShareName $shareName -Context $sourceContext
+# Get all the files and directories in a file share and save as an array in a variable 
+$filesAndDirs = Get-AzStorageFile -ShareName $shareName -Context $sourceContext
 
-    # Iterate through all files and directories in the $filesAndDirs variable with array data type
-    foreach ($f in $filesAndDirs) {
+# Iterate through all files and directories in the $filesAndDirs variable with array data type
+foreach ($f in $filesAndDirs) {
         
-        # If the $f is a file, then compare filedate to olddate and operate on old files, Else if $f is a directory, then recursively call the list_subdir function
+    # If the $f is a file, then compare filedate to olddate and operate on old files, Else if $f is a directory, then recursively call the list_subdir function
         if ($f.GetType().Name -eq "AzureStorageFile") {
 
             $filePath = $($f.ShareFileClient.Path)
@@ -95,5 +94,3 @@ foreach ($share in $shares) {
         Write-Output ""
 
     }
-
-}
