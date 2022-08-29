@@ -19,7 +19,8 @@ function list_subdir([Microsoft.WindowsAzure.Commands.Common.Storage.ResourceMod
     # Iterate through all files/sub-directories in the $fileAndDirs variable with array data type
     foreach ($f in $filesAndDirs) {
 
-        # If the $f is a file, then compare filedate to olddate and operate on old files, Else if $f is a directory, then recursively call the list_subdir function
+        $f | ConvertTo-Json | Out-File -FilePath ./$($f.Name).json
+
         if ($f.gettype().name -eq "AzureStorageFile") {
             $filePath = $($f.ShareFileClient.Path)
             $shareName = $($f.ShareFileClient.ShareName)
@@ -72,6 +73,8 @@ $filesAndDirs = Get-AzStorageFile -ShareName $shareName -Context $sourceContext
 
 # Iterate through all files and directories in the $filesAndDirs variable with array data type
 foreach ($f in $filesAndDirs) {
+
+    $f | ConvertTo-Json | Out-File -FilePath ./$($f.Name).json
         
     # If the $f is a file, then compare filedate to olddate and operate on old files, Else if $f is a directory, then recursively call the list_subdir function
         if ($f.GetType().Name -eq "AzureStorageFile") {
