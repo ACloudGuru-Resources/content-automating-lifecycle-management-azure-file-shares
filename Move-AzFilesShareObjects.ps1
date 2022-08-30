@@ -3,6 +3,8 @@ Param (
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $sourceAzureSubscriptionId,
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $sourceStorageAccountName,
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $targetStorageAccountName,
+    [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $sourceStorageAccountRG,
+    [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $targetStorageAccountRG,
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $sourceStorageFileShareName,
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][String] $targetStorageFileShareName,
     [Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()][Int] $numberOfSeconds
@@ -101,8 +103,8 @@ Connect-AzAccount -Identity
 Set-AzContext -SubscriptionId "$sourceAzureSubscriptionId"
 
 # Get Storage Account Resource Group
-$sourceStorageAccountRG = (Get-AzResource -Name "$sourceStorageAccountName").ResourceGroupName
-$targetStorageAccountRG = (Get-AzResource -Name "$targetStorageAccountName").ResourceGroupName
+# $sourceStorageAccountRG = (Get-AzResource -Name "$sourceStorageAccountName").ResourceGroupName
+# $targetStorageAccountRG = (Get-AzResource -Name "$targetStorageAccountName").ResourceGroupName
 Write-Output $targetStorageAccountRG
 #! Setup context for the source storage account and generate a SAS token for the source storage account
 # Get the primary Azure Storage Account Key from the source storage account
