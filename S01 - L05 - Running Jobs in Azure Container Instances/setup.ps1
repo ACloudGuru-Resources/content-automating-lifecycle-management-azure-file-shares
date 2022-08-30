@@ -5,3 +5,4 @@ curl https://raw.githubusercontent.com/ACloudGuru-Resources/content-automating-l
 az deployment group create `
 --resource-group (az group list --query '[].name' --output tsv) `
 --template-file azuredeploy.json
+
