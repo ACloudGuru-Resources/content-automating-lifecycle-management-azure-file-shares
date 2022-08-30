@@ -1,0 +1,1 @@
+"azcopy","copy","src_url","dest_url","--recursive"
